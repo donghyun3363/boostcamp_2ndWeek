@@ -25,7 +25,7 @@
 
             <ImageButton
                 android:id="@+id/topback"
-                android:layout_width="18dp"
+                android:layout_width="@dimen/sizeIcon"
                 android:layout_height="@dimen/sizeIcon"
                 android:layout_gravity="center"
                 android:background="@android:color/transparent"

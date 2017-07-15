@@ -27,7 +27,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private ContentItem recv_item;
     final static int GRID_LAYOUT = 0;
     final static int LIST_LAYOUT = 1;
     int willChange_flag = 3;
@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 */
 
+
     @OnClick(R.id.changeCard)
     void settingLayoutButton(){
         if(willChange_flag == GRID_LAYOUT || willChange_flag == 3){
@@ -206,10 +207,10 @@ public class MainActivity extends AppCompatActivity {
         String[] populars = getResources().getStringArray(R.array.popular);
         String[] recents = getResources().getStringArray(R.array.recent);
         int[] checks = getResources().getIntArray(R.array.check);
-
+        String[] storeaddress = getResources().getStringArray(R.array.storeaddress);
         for(int i = 0 ; i < ITEM_SIZE ; i++)
         {
-            item[i] = new ContentItem(storeimgs.getResourceId(i, -1), storenames[i], storecontents[i], dists[i], populars[i], recents[i], checks[i]);
+            item[i] = new ContentItem(storeaddress[i], storeimgs.getResourceId(i, -1), storenames[i], storecontents[i], dists[i], populars[i], recents[i], checks[i]);
             items.add(item[i]);
         }
 

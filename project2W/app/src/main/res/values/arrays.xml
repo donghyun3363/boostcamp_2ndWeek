@@ -3,6 +3,17 @@
     /*
     (int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
     */
+    <string-array name="storeaddress">
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+        <item>"인천광역시 연수구 송도동 더샾그린애비뉴 801동 601호"</item>
+    </string-array>
+
     <integer-array name="storeimg">
         <item>@drawable/img_mobidic</item>
         <item>@drawable/img_zerotwonine</item>

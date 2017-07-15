@@ -16,9 +16,15 @@ public class ContentItem {
     private String popular;
     private String recent;
     private int checkbutton;
+    private String storeAddress;
 
-    public ContentItem(int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
+    public ContentItem()
     {
+
+    }
+    public ContentItem(String storeAddress, int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
+    {
+        this.storeAddress = storeAddress;
         this.storeImg = storeImg;
         this.storeContent = storeContent;
         this.storeName = storeName;
@@ -30,6 +36,7 @@ public class ContentItem {
     /*
         Getter
      */
+    public String getStoreAddress(){ return storeAddress;}
     public int getStoreImg() { return storeImg;}
     public int getCheckbutton() { return checkbutton;}
     public String getStoreContent() {
@@ -42,5 +49,14 @@ public class ContentItem {
    /*
         Setter
    */
+   public void setStoreAddress(String storeAddress){ this.storeAddress = storeAddress;}
    public void setCheckbutton(int checkbutton) { this.checkbutton = checkbutton; }
+    public void setStoreImg(int storeImg) { this.storeImg = storeImg;}
+    public void setStoreContent(String storeContent) {
+        this.storeContent = storeContent;
+    }
+    public void setStoreName(String storeName) { this.storeName = storeName;}
+    public void setDist(String dist) { this.dist = dist;}
+    public void setPopular(String popular) { this.popular = popular; }
+    public void setRecent(String recent) { this.recent = recent; }
 }

@@ -5,8 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
+import com.squareup.otto.Produce;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -17,6 +21,35 @@ import butterknife.OnClick;
 public class AddRegisterActivity extends AppCompatActivity {
 
     AddMap appmap = new AddMap();
+    @Bind(R.id.addstorename)
+    EditText addstorename;
+    @Bind(R.id.addstoreaddress)
+    EditText addstoreaddress;
+    @Bind(R.id.addstorenumber)
+    EditText addstorenumber;
+    @Bind(R.id.addstoretext)
+    EditText addstoretext;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 버스프로파이더 등록
+        BusProvider.getInstance().register(this);
+    }
+    @Produce
+    public Message produceItem() {
+// Provide an initial valu  e for location based on the last known position.
+        View v = findViewById(R.id.addstoreaddress);
+        return new Message(new ContentItem(addstoreaddress.getText().toString(),R.drawable.img_shybana, addstorename.getText().toString(),
+                addstoretext.getText().toString(), "0","0","20170715",0));
+    }
+
 
 
     @Override
@@ -39,20 +72,16 @@ public class AddRegisterActivity extends AppCompatActivity {
     }
     @OnClick(R.id.bottomnext)
     void bottomNextfun()
-    {
+    {   //(int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
+        BusProvider.getInstance().post(produceItem());
         openFragment(appmap);
     }
-
     private void openFragment(final AddMap fragment) {
-        Log.e("openFragment 함 내", "들어옴");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Log.e("openFragment 함 내2", "들어옴");
         transaction.replace(R.id.register_container, fragment);
-        Log.e("openFragment 함 내3", "들어옴");
         transaction.addToBackStack(null);
         transaction.commit();
-        Log.e("openFragment 함 내4", "들어옴");
     }
 
 }
