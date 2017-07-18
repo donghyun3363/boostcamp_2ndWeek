@@ -5,12 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.EditText;
 
 import com.squareup.otto.Produce;
 
-import butterknife.Bind;
+import java.util.Date;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,19 +22,19 @@ import butterknife.OnClick;
 public class AddRegisterActivity extends AppCompatActivity {
 
     AddMap appmap = new AddMap();
-    @Bind(R.id.addstorename)
+    @BindView(R.id.addstorename)
     EditText addstorename;
-    @Bind(R.id.addstoreaddress)
+    @BindView(R.id.addstoreaddress)
     EditText addstoreaddress;
-    @Bind(R.id.addstorenumber)
+    @BindView(R.id.addstorenumber)
     EditText addstorenumber;
-    @Bind(R.id.addstoretext)
+    @BindView(R.id.addstoretext)
     EditText addstoretext;
 
     @Override
     protected void onPause() {
         super.onPause();
-        BusProvider.getInstance().unregister(this);
+
     }
 
     @Override
@@ -44,14 +45,13 @@ public class AddRegisterActivity extends AppCompatActivity {
     }
     @Produce
     public Message produceItem() {
-// Provide an initial valu  e for location based on the last known position.
-        View v = findViewById(R.id.addstoreaddress);
+    // Provide an initial valu  e for location based on the last known position.\
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
         return new Message(new ContentItem(addstoreaddress.getText().toString(),R.drawable.img_shybana, addstorename.getText().toString(),
-                addstoretext.getText().toString(), "0","0","20170715",0));
+                addstoretext.getText().toString(), 0,0,date,0));
     }
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +71,7 @@ public class AddRegisterActivity extends AppCompatActivity {
         finish();
     }
     @OnClick(R.id.bottomnext)
-    void bottomNextfun()
-    {   //(int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
+    void bottomNextfun() {   //(int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
         BusProvider.getInstance().post(produceItem());
         openFragment(appmap);
     }

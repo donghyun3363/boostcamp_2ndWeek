@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,11 +18,16 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by DONGHYUNLEE on 2017-07-13.
@@ -37,7 +40,12 @@ public class AddMap extends Fragment implements OnMapReadyCallback {
     private String storeName;
     private double lat;
     private double lng;
+    private Message tempMessage;
 
+    @BindView(R.id.map)
+    MapView mapview;
+    @BindView(R.id.addressText)
+    TextView addressText;
     public AddMap() {
     }
 
@@ -51,30 +59,59 @@ public class AddMap extends Fragment implements OnMapReadyCallback {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 버스프로바이더 등록
-        BusProvider.getInstance().register(this);
+       // BusProvider.getInstance().register(this);
     }
-    @Subscribe//액션이 일어난다 !
-    public void recievedMessage(Message message) {
 
+    @Subscribe
+    public void recievedMessage(Message message) {
+        tempMessage = message;
         address = message.getItem().getStoreAddress();
         storeName = message.getItem().getStoreName();
-        Log.e("과연 ", ":::::::::"+message.getItem().getStoreAddress());
-    }
+        Log.e("액티비티부터 받은 메세지", ":::::::::"+message.getItem().getStoreAddress());
 
+    }
+    @Produce
+    public Message produceItem() {
+        Log.e("액티비티로 보낼 메세지","::" + tempMessage.getItem().getStoreAddress());
+        return tempMessage;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.addmap, container, false);
-        ImageButton mapback = (ImageButton) v.findViewById(R.id.mapback);
-        Button mapexit = (Button) v.findViewById(R.id.mapexit);
-        Button mapnext = (Button) v.findViewById(R.id.bottomnext);
-        MapView mapview=(MapView)v.findViewById(R.id.map);
-        TextView addressText = (TextView) v.findViewById(R.id.addressText);
+        ButterKnife.bind(this, v);
 
+        /*
+            지도 위 주소 정보 setting
+         */
         addressText.setText(address);
         addressText.bringToFront(); // 뷰위에 뷰 덮어쓰기
 
-        Geocoder coder = new Geocoder(getActivity());
+//        settingMap();
+        mapview.onCreate(savedInstanceState);
+        mapview.onResume();
+        mapview.getMapAsync(this);
 
+        return v;
+
+    }
+    @OnClick(R.id.mapback)
+    void backmapFun(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().remove(AddMap.this).commit();
+        fragmentManager.popBackStack();
+    }
+    @OnClick(R.id.mapexit)
+    void mapExitFun(){
+        getActivity().finish();
+    }
+    @OnClick(R.id.bottomnext)
+    void bottomNextfun(){
+        BusProvider.getInstance().post(produceItem());
+        getActivity().finish();
+    }
+
+    void settingMap(){
+        Geocoder coder = new Geocoder(getActivity());
         try {
             List<Address> addrList = coder.getFromLocationName(address,3);
             Iterator<Address> addrs = addrList.iterator();
@@ -84,7 +121,6 @@ public class AddMap extends Fragment implements OnMapReadyCallback {
             while(addrs.hasNext()) {
                 Address loc = addrs.next();
                 infoAddr += String.format("Coord : %f, %f", loc.getLatitude(), loc.getLongitude());
-                Log.e("!!!!!!!!!!!!!!","@@@@@@@@@@2"+infoAddr);
                 lat = loc.getLatitude();
                 lng = loc.getLongitude();
             }
@@ -92,37 +128,7 @@ public class AddMap extends Fragment implements OnMapReadyCallback {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        mapview.onCreate(savedInstanceState);
-        mapview.onResume();
-        mapview.getMapAsync(this);
-
-        mapback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().remove(AddMap.this).commit();
-                fragmentManager.popBackStack();
-            }
-        });
-        mapexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-        mapnext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        return v;
-
     }
-
     @Override
     public void onMapReady(final GoogleMap map) {
 
@@ -134,11 +140,8 @@ public class AddMap extends Fragment implements OnMapReadyCallback {
         markerOptions.title(storeName);
         markerOptions.snippet(address);
         map.addMarker(markerOptions);
-
         map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
         map.animateCamera(CameraUpdateFactory.zoomTo(10));
 
     }
-
-
 }

@@ -1,5 +1,7 @@
 package com.example.donghyunlee.project2w;
 
+import java.util.Date;
+
 /**
  * Created by DONGHYUNLEE on 2017-07-11.
  */
@@ -12,18 +14,16 @@ public class ContentItem {
     private int storeImg;
     private String storeName;
     private String storeContent;
-    private String dist;
-    private String popular;
-    private String recent;
+    private double dist;
+    private double popular;
+    private Date recent;
     private int checkbutton;
     private String storeAddress;
 
-    public ContentItem()
-    {
+    public ContentItem() {
 
     }
-    public ContentItem(String storeAddress, int storeImg, String storeName, String storeContent, String dist, String popular, String recent,int checkbutton)
-    {
+    public ContentItem(String storeAddress, int storeImg, String storeName, String storeContent, double dist, double popular, Date recent,int checkbutton) {
         this.storeAddress = storeAddress;
         this.storeImg = storeImg;
         this.storeContent = storeContent;
@@ -43,9 +43,9 @@ public class ContentItem {
         return storeContent;
     }
     public String getStoreName() { return storeName; }
-    public String getDist() { return dist; }
-    public String getPopular() { return popular; }
-    public String getRecent() { return recent; }
+    public double getDist() { return dist;}
+    public double getPopular() { return popular; }
+    public Date getRecent() { return recent; }
    /*
         Setter
    */
@@ -56,7 +56,7 @@ public class ContentItem {
         this.storeContent = storeContent;
     }
     public void setStoreName(String storeName) { this.storeName = storeName;}
-    public void setDist(String dist) { this.dist = dist;}
-    public void setPopular(String popular) { this.popular = popular; }
-    public void setRecent(String recent) { this.recent = recent; }
+    public void setDist(double dist) { this.dist = dist;}
+    public void setPopular(double popular) { this.popular = popular; }
+    public void setRecent(Date recent) { this.recent = recent; }
 }

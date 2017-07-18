@@ -7,12 +7,9 @@ package com.example.donghyunlee.project2w;
 public class Message {
 
     public ContentItem item;
-
     Message(ContentItem item){
-
         this.item = item;
     }
-
     public ContentItem getItem() {
         return item;
     }

@@ -46,36 +46,35 @@
     </string-array>
 
     <string-array name="dist">
-        <item>1m</item>
-        <item>2m</item>
-        <item>3m</item>
-        <item>4m</item>
-        <item>5m</item>
-        <item>6m</item>
-        <item>7m</item>
-        <item>8m</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
     </string-array>
     <string-array name="popular">
-        <item>8개</item>
-        <item>7개</item>
-        <item>6개</item>
-        <item>5개</item>
-        <item>4개</item>
-        <item>3개</item>
-        <item>2개</item>
-        <item>1개</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
     </string-array>
 
-
     <string-array name="recent">
-        <item>4일</item>
-        <item>3일</item>
-        <item>2일</item>
-        <item>1일</item>
-        <item>8일</item>
-        <item>6일</item>
-        <item>5일</item>
-        <item>4일</item>
+        <item>2017/07/03</item>
+        <item>2017/07/02</item>
+        <item>2017/07/05</item>
+        <item>2017/07/06</item>
+        <item>2017/07/08</item>
+        <item>2017/07/06</item>
+        <item>2017/07/07</item>
+        <item>2017/07/02</item>
     </string-array>
     <integer-array name="check">
         <item>0</item>

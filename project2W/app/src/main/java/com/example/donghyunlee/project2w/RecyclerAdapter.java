@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by DONGHYUNLEE on 2017-07-11.
  */
@@ -34,39 +37,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Conten
     /*
             ViewHolder
          */
-    public class ContentViewHolder extends RecyclerView.ViewHolder{
+    class ContentViewHolder extends RecyclerView.ViewHolder{
 
-
-        TextView storeName;
-        TextView storeContent;
-        ImageButton storeCheck;
-        ImageView storeImage;
+        @BindView(R.id.storeImage) ImageView storeImage;
+        @BindView(R.id.storeName) TextView storeName;
+        @BindView(R.id.storeContent) TextView storeContent;
+        @BindView(R.id.storeCheck) ImageButton storeCheck;
         public ContentViewHolder(View itemView) {
             super(itemView);
-            storeImage = (ImageView) itemView.findViewById(R.id.storeImage);
-            storeName = (TextView) itemView.findViewById(R.id.storeName);
-            storeContent = (TextView) itemView.findViewById(R.id.storeContent);
-            storeCheck = (ImageButton) itemView.findViewById(R.id.storeCheck);
+            ButterKnife.bind(this, itemView) ;
         }
     }
-
     @Override
     public ContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ContentViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, null));
     }
-
     @Override
     public void onBindViewHolder(ContentViewHolder holder, int position) {
         final ContentItem item = items.get(position);
-
-        Glide.with(context).load(item.getStoreImg()).into(holder.storeImage);
-      //  holder.storeImage.
+        Glide.with(context).load(item.getStoreImg()).into(holder.storeImage);//  holder.storeImage.
         holder.storeName.setText(item.getStoreName());
         holder.storeContent.setText(item.getStoreContent());
         /*
             컨텐츠 내 버튼 선택
          */
-        if(item.getCheckbutton() == UNSELECT) {
+        // modified, 상수는 앞에 선언하는 것이 좋다.
+        if(UNSELECT == item.getCheckbutton()) {
             holder.storeCheck.setImageResource(R.drawable.ic_borderstar);
         }
         else {
@@ -88,16 +84,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Conten
                 }
             }
         });
-
     }
     @Override
     public int getItemCount() {
         return items.size();
     }
-
-
-
-
-
 }
 
